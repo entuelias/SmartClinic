@@ -1,0 +1,82 @@
+{
+  "realm": "clinic-realm",
+  "enabled": true,
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "email": "admin@clinic.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "admin"
+      ]
+    },
+    {
+      "username": "doctor",
+      "enabled": true,
+      "email": "doctor@clinic.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "doctor",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "doctor"
+      ]
+    },
+    {
+      "username": "patient",
+      "enabled": true,
+      "email": "patient@clinic.com",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "patient",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "patient"
+      ]
+    }
+  ],
+  "roles": {
+    "realm": [
+      {
+        "name": "admin",
+        "description": "Administrator role"
+      },
+      {
+        "name": "doctor",
+        "description": "Medical Doctor role"
+      },
+      {
+        "name": "patient",
+        "description": "Patient role"
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "clinic-client",
+      "enabled": true,
+      "publicClient": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ]
+    }
+  ]
+}

@@ -1,28 +1,32 @@
 using System;
-using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SmartClinic.AppointmentScheduling.Domain.Entities;
 using SmartClinic.AppointmentScheduling.Domain.Repositories;
 
 namespace SmartClinic.AppointmentScheduling.Infrastructure.Persistence
 {
-    // Simple in-memory repository for testing via API; replace with real persistence in production.
     public sealed class AppointmentRepository : IAppointmentRepository
     {
-        private readonly ConcurrentDictionary<Guid, Appointment> _store = new();
+        private readonly AppointmentDbContext _context;
 
-        public Task AddAsync(Appointment appointment)
+        public AppointmentRepository(AppointmentDbContext context)
+        {
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public async Task AddAsync(Appointment appointment)
         {
             if (appointment is null) throw new ArgumentNullException(nameof(appointment));
 
-            _store[appointment.Id] = appointment;
-            return Task.CompletedTask;
+            await _context.Appointments.AddAsync(appointment);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Appointment?> GetByIdAsync(Guid id)
+        public async Task<Appointment?> GetByIdAsync(Guid id)
         {
-            _store.TryGetValue(id, out var appointment);
-            return Task.FromResult(appointment);
+            return await _context.Appointments
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
     }
 }

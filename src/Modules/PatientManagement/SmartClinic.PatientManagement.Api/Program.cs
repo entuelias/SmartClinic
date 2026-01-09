@@ -1,17 +1,24 @@
 using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using SmartClinic.PatientManagement.Application.Commands;
+using SmartClinic.PatientManagement.Infrastructure.Persistence;
+using SmartClinic.PatientManagement.Domain.Repositories;
 
 var builder = WebApplication.CreateBuilder(args: args ?? new string[0]);
 
 // Register MediatR scanning the Application assembly
 builder.Services.AddMediatR(typeof(RegisterPatientCommand).Assembly);
-// Register minimal in-memory repository implementation from Infrastructure
-builder.Services.AddSingleton<SmartClinic.PatientManagement.Domain.Repositories.IPatientRepository, SmartClinic.PatientManagement.Infrastructure.Persistence.PatientRepository>();
+
+// Infrastructure
+builder.Services.AddDbContext<PatientDbContext>(options =>
+    options.UseInMemoryDatabase("PatientDb"));
+
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 
 // Swagger/OpenAPI for minimal API testing
 builder.Services.AddEndpointsApiExplorer();

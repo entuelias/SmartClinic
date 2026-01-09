@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {}
+    "net10.0": {
+      "SmartClinic.BuildingBlocks.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/SmartClinic.BuildingBlocks.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartClinic.BuildingBlocks.Domain.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "SmartClinic.BuildingBlocks.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SmartClinic.BuildingBlocks.Domain/SmartClinic.BuildingBlocks.Domain.csproj",
+      "msbuildProject": "../SmartClinic.BuildingBlocks.Domain/SmartClinic.BuildingBlocks.Domain.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net10.0": []
+    "net10.0": [
+      "SmartClinic.BuildingBlocks.Domain >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\ms\\.nuget\\packages\\": {}
@@ -31,7 +50,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\BuildingBlocks\\SmartClinic.BuildingBlocks.Domain\\SmartClinic.BuildingBlocks.Domain.csproj": {
+              "projectPath": "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\BuildingBlocks\\SmartClinic.BuildingBlocks.Domain\\SmartClinic.BuildingBlocks.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

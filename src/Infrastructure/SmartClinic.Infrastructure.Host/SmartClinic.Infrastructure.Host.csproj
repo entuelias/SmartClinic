@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-SmartClinic.Infrastructure.Host-15f7f9ae-7b2b-42e7-a614-687edd5d4f07</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.15.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\SmartClinic.BuildingBlocks.BackgroundJobs\SmartClinic.BuildingBlocks.BackgroundJobs.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\SmartClinic.BuildingBlocks.Messaging\SmartClinic.BuildingBlocks.Messaging.csproj" />
+    <ProjectReference Include="..\..\BuildingBlocks\SmartClinic.BuildingBlocks.Outbox\SmartClinic.BuildingBlocks.Outbox.csproj" />
+    <ProjectReference Include="..\..\Modules\AppointmentScheduling\SmartClinic.AppointmentScheduling.Infrastructure\SmartClinic.AppointmentScheduling.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\PatientManagement\SmartClinic.PatientManagement.Infrastructure\SmartClinic.PatientManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\PrescriptionManagement\SmartClinic.PrescriptionManagement.Infrastructure\SmartClinic.PrescriptionManagement.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

@@ -358,7 +358,11 @@
         "frameworks": {
           "net10.0": {
             "targetAlias": "net10.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\BuildingBlocks\\SmartClinic.BuildingBlocks.Domain\\SmartClinic.BuildingBlocks.Domain.csproj": {
+                "projectPath": "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\BuildingBlocks\\SmartClinic.BuildingBlocks.Domain\\SmartClinic.BuildingBlocks.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

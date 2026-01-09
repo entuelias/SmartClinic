@@ -25,7 +25,24 @@ builder.Services.AddDbContext<PrescriptionDbContext>(options =>
 builder.Services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
 
 // Add authentication and authorization
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/clinic-realm";
+    options.RequireHttpsMetadata = false;
+    options.Audience = "clinic-client";
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateAudience = false,
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/clinic-realm",
+        ValidateLifetime = true
+    };
+});
 builder.Services.AddAuthorization();
 
 // Swagger/OpenAPI for minimal API testing
@@ -39,11 +56,11 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 // Enable authentication and authorization
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 // POST /prescriptions - Create a new prescription
-app.MapPost("/prescriptions", async (CreatePrescriptionRequest request, IMediator mediator) =>
+app.MapPost("/prescriptions", [Authorize] async (CreatePrescriptionRequest request, IMediator mediator) =>
 {
     // Map API DTO to Application Command
     var command = new CreatePrescriptionCommand
@@ -61,6 +78,7 @@ app.MapPost("/prescriptions", async (CreatePrescriptionRequest request, IMediato
     var prescriptionId = await mediator.Send(command);
     return Results.Created($"/prescriptions/{prescriptionId}", new { id = prescriptionId });
 })
+.RequireAuthorization()
 .WithName("CreatePrescription")
 .WithTags("Prescriptions")
 .Produces<Guid>(StatusCodes.Status201Created)

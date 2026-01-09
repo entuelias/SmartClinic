@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SmartClinic.AppointmentScheduling.Api.Requests;
@@ -16,31 +17,47 @@ var builder = WebApplication.CreateBuilder(args: args ?? Array.Empty<string>());
 
 // Application wiring
 builder.Services.AddMediatR(typeof(BookAppointmentCommand).Assembly);
-builder.Services.AddAuthorization();
-builder.Services.AddSingleton<IAppointmentRepository, AppointmentRepository>();
+
+// Infrastructure
+builder.Services.AddDbContext<AppointmentDbContext>(options =>
+    options.UseInMemoryDatabase("AppointmentDb"));
+
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-if (builder.Environment.IsDevelopment())
+// Authentication
+builder.Services.AddAuthentication(options =>
 {
-    builder.Services.AddAuthentication("Dev")
-        .AddScheme<AuthenticationSchemeOptions, DevelopmentAuthHandler>("Dev", _ => { });
-
-    builder.Services.AddAuthorization(options =>
+    options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/clinic-realm";
+    options.RequireHttpsMetadata = false;
+    options.Audience = "clinic-client";
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
-        options.DefaultPolicy = new AuthorizationPolicyBuilder()
-            .AddAuthenticationSchemes("Dev")
-            .RequireAuthenticatedUser()
-            .Build();
-    });
-}
+        ValidateAudience = false,
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Keycloak:Authority"] ?? "http://localhost:8080/realms/clinic-realm",
+        ValidateLifetime = true
+    };
+})
+.AddScheme<AuthenticationSchemeOptions, DevelopmentAuthHandler>("Dev", _ => { });
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// Enable Swagger in all environments for testing purposes
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
 app.UseAuthentication();

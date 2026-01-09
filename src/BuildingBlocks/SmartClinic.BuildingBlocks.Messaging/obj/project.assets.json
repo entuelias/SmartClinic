@@ -1,11 +1,79 @@
 {
   "version": 3,
   "targets": {
-    "net10.0": {}
+    "net10.0": {
+      "RabbitMQ.Client/6.8.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "SmartClinic.BuildingBlocks.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "compile": {
+          "bin/placeholder/SmartClinic.BuildingBlocks.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartClinic.BuildingBlocks.Domain.dll": {}
+        }
+      },
+      "SmartClinic.BuildingBlocks.Outbox/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "SmartClinic.BuildingBlocks.Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/SmartClinic.BuildingBlocks.Outbox.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SmartClinic.BuildingBlocks.Outbox.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "RabbitMQ.Client/6.8.1": {
+      "sha512": "jNsmGgmCNw2S/NzskeN2ijtGywtH4Sk/G6jWUTD5sY9SrC27Xz6BsLIiB8hdsfjeyWCa4j4GvCIGkpE8wrjU1Q==",
+      "type": "package",
+      "path": "rabbitmq.client/6.8.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net462/RabbitMQ.Client.dll",
+        "lib/net462/RabbitMQ.Client.xml",
+        "lib/netstandard2.0/RabbitMQ.Client.dll",
+        "lib/netstandard2.0/RabbitMQ.Client.xml",
+        "rabbitmq.client.6.8.1.nupkg.sha512",
+        "rabbitmq.client.nuspec"
+      ]
+    },
+    "SmartClinic.BuildingBlocks.Domain/1.0.0": {
+      "type": "project",
+      "path": "../SmartClinic.BuildingBlocks.Domain/SmartClinic.BuildingBlocks.Domain.csproj",
+      "msbuildProject": "../SmartClinic.BuildingBlocks.Domain/SmartClinic.BuildingBlocks.Domain.csproj"
+    },
+    "SmartClinic.BuildingBlocks.Outbox/1.0.0": {
+      "type": "project",
+      "path": "../SmartClinic.BuildingBlocks.Outbox/SmartClinic.BuildingBlocks.Outbox.csproj",
+      "msbuildProject": "../SmartClinic.BuildingBlocks.Outbox/SmartClinic.BuildingBlocks.Outbox.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net10.0": []
+    "net10.0": [
+      "RabbitMQ.Client >= 6.8.1",
+      "SmartClinic.BuildingBlocks.Outbox >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\ms\\.nuget\\packages\\": {}
@@ -31,7 +99,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\BuildingBlocks\\SmartClinic.BuildingBlocks.Outbox\\SmartClinic.BuildingBlocks.Outbox.csproj": {
+              "projectPath": "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\BuildingBlocks\\SmartClinic.BuildingBlocks.Outbox\\SmartClinic.BuildingBlocks.Outbox.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -49,6 +121,12 @@
     "frameworks": {
       "net10.0": {
         "targetAlias": "net10.0",
+        "dependencies": {
+          "RabbitMQ.Client": {
+            "target": "Package",
+            "version": "[6.8.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

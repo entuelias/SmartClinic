@@ -4,4 +4,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartClinic.BuildingBlocks.Outbox\SmartClinic.BuildingBlocks.Outbox.csproj" />
+  </ItemGroup>
 </Project>

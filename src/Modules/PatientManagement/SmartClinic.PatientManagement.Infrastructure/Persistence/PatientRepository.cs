@@ -1,19 +1,25 @@
-using System.Collections.Concurrent;
+using System;
 using System.Threading.Tasks;
 using SmartClinic.PatientManagement.Domain.Entities;
 using SmartClinic.PatientManagement.Domain.Repositories;
 
 namespace SmartClinic.PatientManagement.Infrastructure.Persistence
 {
-    // Minimal in-memory implementation used for smoke tests.
     public class PatientRepository : IPatientRepository
     {
-        private readonly ConcurrentDictionary<System.Guid, Patient> _store = new();
+        private readonly PatientDbContext _context;
 
-        public Task AddAsync(Patient patient)
+        public PatientRepository(PatientDbContext context)
         {
-            _store[patient.Id] = patient;
-            return Task.CompletedTask;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+        }
+
+        public async Task AddAsync(Patient patient)
+        {
+            if (patient == null) throw new ArgumentNullException(nameof(patient));
+
+            await _context.Patients.AddAsync(patient);
+            await _context.SaveChangesAsync();
         }
     }
 }
