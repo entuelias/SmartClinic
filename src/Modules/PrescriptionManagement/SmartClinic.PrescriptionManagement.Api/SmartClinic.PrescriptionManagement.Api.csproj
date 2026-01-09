@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="11.*" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SmartClinic.PrescriptionManagement.Application\SmartClinic.PrescriptionManagement.Application.csproj" />
+    <ProjectReference Include="..\SmartClinic.PrescriptionManagement.Infrastructure\SmartClinic.PrescriptionManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\SmartClinic.BuildingBlocks.Security\SmartClinic.BuildingBlocks.Security.csproj" />
+  </ItemGroup>
+</Project>

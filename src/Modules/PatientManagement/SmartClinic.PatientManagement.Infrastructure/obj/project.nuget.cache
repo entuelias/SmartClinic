@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "K2w6ETICDqw=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ms\\OneDrive\\Documents\\Clinic-System\\src\\Modules\\PatientManagement\\SmartClinic.PatientManagement.Infrastructure\\SmartClinic.PatientManagement.Infrastructure.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ms\\.nuget\\packages\\mediatr\\11.1.0\\mediatr.11.1.0.nupkg.sha512",
+    "C:\\Users\\ms\\.nuget\\packages\\mediatr.contracts\\1.0.1\\mediatr.contracts.1.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
